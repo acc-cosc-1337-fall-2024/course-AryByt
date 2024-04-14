@@ -1,6 +1,8 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include "catch.hpp"
 #include "tic_tac_toe.h"
+using std::cout;
+#include "tic_tac_toe_manager.h"
 
 TEST_CASE("Verify Test Configuration", "verification") {
 	REQUIRE(true == true);
@@ -192,4 +194,94 @@ TEST_CASE("Test win diagonally from bottom left")
 	game.display_board();
 	REQUIRE(game.game_over() == true);
 	std::cout<<"The winner of the round is: "<<game.get_winner()<<"\n\n";
+}
+
+TEST_CASE("Test get win from X")
+{
+	TicTacToe game;
+	TicTacToeManager managerGames;
+	game.start_game("X");
+	game.mark_board(7);
+	game.mark_board(1);
+	game.mark_board(8);
+	game.mark_board(2);
+	game.mark_board(9);
+	game.mark_board(5);
+	game.mark_board(3);
+	game.mark_board(6);
+	game.mark_board(4);
+
+	int xWins;
+	int oWins;
+	int tWins;
+
+	managerGames.save_game(game);
+	game.display_board();
+	managerGames.get_winner_total(oWins, xWins, tWins);
+	cout<<"\nX has won: "<<xWins;
+	cout<<"\nO has won: "<<oWins;
+	cout<<"\nT has won: "<<tWins<<"\n";
+	REQUIRE(xWins == 1);
+	REQUIRE(oWins == 0);
+	REQUIRE(tWins == 0);
+}
+
+TEST_CASE("Test win from O")
+{
+	TicTacToe game;
+	TicTacToeManager managerGames;
+	game.start_game("O");
+	game.mark_board(7);
+	game.mark_board(1);
+	game.mark_board(8);
+	game.mark_board(2);
+	game.mark_board(9);
+	game.mark_board(5);
+	game.mark_board(3);
+	game.mark_board(6);
+	game.mark_board(4);
+
+	int xWins;
+	int oWins;
+	int tWins;
+
+	managerGames.save_game(game);
+	game.display_board();
+	managerGames.get_winner_total(oWins, xWins, tWins);
+	cout<<"\nX has won: "<<xWins;
+	cout<<"\nO has won: "<<oWins;
+	cout<<"\nT has won: "<<tWins<<"\n";
+	REQUIRE(xWins == 0);
+	REQUIRE(oWins == 1);
+	REQUIRE(tWins == 0);
+}
+
+TEST_CASE("Test win from T")
+{
+	TicTacToe game;
+	TicTacToeManager managerGames;
+	game.start_game("X");
+	game.mark_board(1);
+	game.mark_board(2);
+	game.mark_board(3);
+	game.mark_board(4);
+	game.mark_board(5);
+	game.mark_board(7);
+	game.mark_board(6);
+	game.mark_board(9);
+	game.mark_board(8);
+
+	int xWins;
+	int oWins;
+	int tWins;
+
+	managerGames.save_game(game);
+	game.display_board();
+	managerGames.get_winner_total(oWins, xWins, tWins);
+	cout<<"\nX has won: "<<xWins;
+	cout<<"\nO has won: "<<oWins;
+	cout<<"\nT has won: "<<tWins<<"\n";
+	REQUIRE(xWins == 0);
+	REQUIRE(oWins == 0);
+	REQUIRE(tWins == 1);
 }
